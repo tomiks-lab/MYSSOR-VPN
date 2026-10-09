@@ -1,0 +1,16 @@
+services:
+  bot:
+    build: .
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+  api:
+    build: .
+    env_file: .env
+    restart: unless-stopped
+    command: ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./data:/app/data
